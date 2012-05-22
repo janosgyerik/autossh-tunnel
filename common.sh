@@ -43,4 +43,7 @@ require() {
 
 test -f ./local.sh && . ./local.sh
 
+# make last statement TRUE
+:
+
 # eof
