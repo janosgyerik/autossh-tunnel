@@ -4,11 +4,12 @@
 # Purpose: configure autossh-tunnel project
 #
 
-cd $(dirname $0)
+cd $(dirname "$0")
 . ./common.sh
 
 require autossh
 
+cat<<"EOF" >/dev/null
 info "checking ssh key in $keyfile"
 if test -f $keyfile; then
     result ssh key exists
@@ -16,6 +17,7 @@ else
     result ssh key does NOT exist, creating now
     ssh-keygen -t rsa -C "autossh-$hostname" -N '' -f $keyfile
 fi
+EOF
 
 info detecting tunnel sites
 tunnelsites=$(detect_tunnelsites)
