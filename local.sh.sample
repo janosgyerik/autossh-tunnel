@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# File: local.sh
+# Purpose: override variables and functions defined in ./common.sh
+# Note: DO NOT COMMIT THIS TO VCS !
+#
+
+#hostname=the_local_hostname
+
+#keyfile=~/.ssh/autossh-id_rsa
+
+# eof
