@@ -28,7 +28,7 @@ How it works
         RemoteForward 8022 localhost:22
         IdentityFile ~/.ssh/autossh-id_rsa
 
-2. `keygen.sh`: helper script to generate an SSH key without passphrase.
+2. `ssh-keygen.sh`: helper script to generate an SSH key without passphrase.
    Note: for added security, the public key is configured with the
    following options:
 
