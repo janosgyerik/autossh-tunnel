@@ -10,12 +10,12 @@ cd $(dirname "$0")
 require autossh
 
 cat<<"EOF" >/dev/null
-info "checking ssh key in $keyfile"
-if test -f $keyfile; then
+info "checking ssh key in $ssh_key_file"
+if test -f $ssh_key_file; then
     result ssh key exists
 else
     result ssh key does NOT exist, creating now
-    ssh-keygen -t rsa -C "autossh-$hostname" -N '' -f $keyfile
+    ssh-keygen -t rsa -C $ssh_key_comment -N '' -f $ssh_key_file
 fi
 EOF
 
@@ -39,7 +39,7 @@ else
     echo Hostname rhostname
     echo User ruser
     echo RemoteForward 8022 localhost:22
-    echo IdentityFile $keyfile
+    echo IdentityFile $ssh_key_file
 fi
 
 cat<<EOF
@@ -50,7 +50,7 @@ Host autossh-rhostname
 Hostname rhostname
 User ruser
 RemoteForward 8022 localhost:22
-IdentityFile $keyfile
+IdentityFile $ssh_key_file
 *
 * 2. Validate configured tunnel sites with ./prepare-remote.sh
 *

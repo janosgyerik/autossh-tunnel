@@ -16,7 +16,7 @@ for tunnelsite in $tunnelsites; do
 	warn could not login to tunnel site $tunnelsite with ssh key
 	info trying to add ssh key to remote authorized_keys file
 	info you will be prompted for your remote password
-	sed -e "s/^/command=\"\/bin\/false\",no-agent-forwarding,no-X11-forwarding,no-pty /" $keyfile.pub > authorized_keys
+	sed -e "s/^/command=\"\/bin\/false\",no-agent-forwarding,no-X11-forwarding,no-pty /" $ssh_key_file.pub > authorized_keys
 	ssh $tunnelsite 'mkdir -p .ssh; cat >> .ssh/authorized_keys; chmod -R go-rwx .ssh' < authorized_keys
 	if ! test $? = 0 -o $? = 1; then
 	    warn could not add ssh key to authorized_keys, skipping $tunnelsite

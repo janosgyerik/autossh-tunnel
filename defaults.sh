@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# File: local.sh
-# Purpose: override variables and functions defined in ./defaults.sh
-# Note: DO NOT COMMIT THIS TO VCS !
+# File: defaults.sh
+# Purpose: default variable settings
+# Note: feel free to override any of these in ./local.sh
 #
 
 # path to the ssh private key used when connecting to tunnel sites

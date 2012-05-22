@@ -1,13 +1,11 @@
 #!/bin/sh
 #
 # File: common.sh
-# Purpose: common functions and configuration values
-# Note: at the bottom, we source ./local.sh if exists, useful for overrides
+# Purpose: common functions
 #
 
-hostname=$(hostname)
-
-keyfile=~/.ssh/autossh-id_rsa
+. ./defaults.sh
+test -f ./local.sh && . ./local.sh
 
 ready_dir=ready
 mkdir -p $ready_dir
@@ -24,9 +22,6 @@ detect_tunnelsites() {
 info() {
     echo '[info]' $@
 }
-checking() {
-    echo '[check]' $@
-}
 result() {
     echo '[result]' $@
 }
@@ -40,10 +35,5 @@ require() {
         exit 1
     fi
 }
-
-test -f ./local.sh && . ./local.sh
-
-# make last statement TRUE
-:
 
 # eof
