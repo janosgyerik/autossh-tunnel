@@ -9,37 +9,45 @@ cd $(dirname "$0")
 
 test "$1" && tunnelsites="$@" || tunnelsites=$(detect_tunnelsites)
 
+ssh_copy_id() {
+    info trying to add ssh key to remote authorized_keys file
+    info 'you may be prompted for your remote password'
+    ssh $tunnelsite 'mkdir -p .ssh; cat >> .ssh/authorized_keys; chmod -R go-rwx .ssh' < $ssh_key_file.pub
+}
+
 for tunnelsite in $tunnelsites; do
-    readyfile=$ready_dir/$tunnelsite
+    recheck=0
+    confirmed_access=0
     info testing access to tunnel site $tunnelsite with ssh key
     SSH_AGENT_PID= SSH_AUTH_SOCK= ssh -i $ssh_key_file -o BatchMode=yes $tunnelsite date
     exitcode=$?
     if test $exitcode = 0; then
         warn 'It seems there is an active ControlMaster.'
         warn 'In this case it is impossible to validate the custom ssh key'
-        warn 'perfectly, therefore skipping this tunnel site now.'
-        warn 'Exit the ssh session that started ControlMaster'
-        warn 'and run this script again.'
-        continue
+        warn 'perfectly, but trying best effort.'
+        ssh $tunnelsite grep "^command.*$ssh_key_comment" .ssh/authorized_keys >/dev/null
+        if test $? = 0; then
+            info 'Custom ssh key is in authorized_keys, so probably it works.'
+            confirmed_access=1
+        else
+            info 'Custom ssh is not in authorized_keys.'
+            ssh_copy_id && recheck=1 || continue
+        fi
     elif test $exitcode = 1; then
         info 'Exit code was 1, most probably because the key is authorized'
         info 'with the forced command /bin/false as expected.'
-        info marking tunnel site ready
-        > $readyfile
+        confirmed_access=1
     else
-        info trying to add ssh key to remote authorized_keys file
-        info 'you may be prompted for your remote password'
-        ssh $tunnelsite 'mkdir -p .ssh; cat >> .ssh/authorized_keys; chmod -R go-rwx .ssh' < $ssh_key_file.pub
-        if test $? = 0; then
-            info 'public key was successfully installed, checking access again'
-            SSH_AGENT_PID= SSH_AUTH_SOCK= ssh -i $ssh_key_file -o BatchMode=yes $tunnelsite date
-            if test $? = 1; then
-                info marking tunnel site ready
-                > $readyfile
-            fi
-        else
-            warn could not add ssh key to authorized_keys
-        fi
+        ssh_copy_id && recheck=1 || continue
+    fi
+    if test $recheck = 1; then
+        info 'checking access again'
+        SSH_AGENT_PID= SSH_AUTH_SOCK= ssh -i $ssh_key_file -o BatchMode=yes $tunnelsite date
+        test $? = 0 -o $? = 1 && confirmed_access=1
+    fi
+    if test $confirmed_access = 1; then
+        info marking tunnel site ready
+        > $ready_dir/$tunnelsite
     fi
 done
 
