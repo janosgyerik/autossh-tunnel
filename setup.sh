@@ -64,7 +64,7 @@ echo
 heading 'Example to test that a tunnel site is working'
 cat<<EOF
 
-    ./autossh.sh autossh-HOSTNAME
+    AUTOSSH_PORT=0 ./autossh.sh autossh-HOSTNAME
     ssh USERNAME@HOSTNAME
     ssh -p 8022 localhost
 

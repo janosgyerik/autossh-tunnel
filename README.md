@@ -46,7 +46,7 @@ How it works
 
 6. Add to `crontab` a line like this to periodically run `autossh.sh`:
 
-        0 * * * * $PWD/autossh.sh
+        0 * * * * AUTOSSH_PORT=0 $PWD/autossh.sh
 
 
 How to install
