@@ -4,7 +4,7 @@ cd $(dirname $0)
 
 test "$1" = --remove && mode=remove || mode=add
 
-cron_unique_label="Site Tunnel: $PWD"
+cron_unique_label="autossh tunnel: $PWD"
 
 # if crontab is executable
 if type crontab >/dev/null 2>/dev/null; then

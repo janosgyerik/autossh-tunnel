@@ -7,7 +7,7 @@
 cd $(dirname "$0")
 . ./common.sh
 
-test "$1" && tunnelsites="$@" || tunnelsites=$(detect_tunnelsites)
+test "$1" && tunnelsites="$@" || tunnelsites=$(./detect-tunnel-sites.sh)
 
 ssh_copy_id() {
     info trying to add ssh key to remote authorized_keys file

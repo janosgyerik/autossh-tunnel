@@ -1,9 +1,3 @@
-CLEANING UP IN PROGRESS !!!
-===========================
-I'm still refactoring the scripts at this moment.
-Come back again after this message is removed!
-
-
 autossh-tunnel
 ==============
 Setup and keep alive ssh tunnels to remote sites using autossh, screen, cron.

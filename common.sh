@@ -15,10 +15,6 @@ is_ready_tunnelsite() {
     test -f $readyfile && return 0 || return 1
 }
 
-detect_tunnelsites() {
-    grep '^Host autossh-.*' ~/.ssh/config 2>/dev/null | cut -f2 -d' '
-}
-
 info() {
     echo '[info]' $@
 }
