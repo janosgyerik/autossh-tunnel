@@ -1,13 +1,12 @@
 autossh-tunnel
 ==============
-Setup and keep alive ssh tunnels to remote sites using autossh, screen, cron.
+Setup and keep alive ssh tunnels to remote sites using autossh, screen.
 
 
 Requirements
 ------------
 - autossh
 - screen
-- cron
 
 
 How it works
@@ -45,8 +44,9 @@ How it works
 5. `autossh.sh`: run `autossh` for each detected site in an independent
    `screen` session, unless already running
 
-6. `crontab.sh`: helper script to add or remove a cron job to
-   periodically run `autossh.sh`
+6. Add to `crontab` a line like this to periodically run `autossh.sh`:
+
+        0 * * * * $PWD/autossh.sh
 
 
 How to install
@@ -58,7 +58,7 @@ gives you the steps you need to follow to complete the configuration.
 
 How to uninstall
 ----------------
-- `./crontab.sh --remove` to remove the cron job
+- Remove any `cron` jobs running `autossh.sh`
 - `./stop.sh` to stop any running `autossh` and `screen` instances
 - Login to each tunnel site and manually remove the script's SSH key
   from `~/.ssh/authorized_keys`
