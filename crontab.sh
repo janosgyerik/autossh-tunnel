@@ -32,18 +32,8 @@ if type crontab >/dev/null 2>/dev/null; then
     elif test $mode = remove; then
         # if this crontab entry exists
         if crontab -l 2>/dev/null | grep -x "$cron_unique_label" >/dev/null 2>/dev/null; then
-            # creating sed file
-            cat <<EOF >"$workfile"
-\?^$cron_unique_label? {
-: next
-n
-/./ b next
-d
-}
-p
-EOF
             echo Removing crontab entry ...
-            crontab -l 2>/dev/null | sed -nf "$workfile" | crontab -
+            crontab -l 2>/dev/null | sed -e "\?^$cron_unique_label\$?,/^\$/ d" | crontab -
         else
             echo Crontab entry does not exist, nothing to do.
         fi
