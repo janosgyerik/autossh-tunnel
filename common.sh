@@ -7,12 +7,12 @@
 . ./defaults.sh
 test -f ./local.sh && . ./local.sh
 
-ready_dir=ready
-mkdir -p $ready_dir
+confirmed_dir=./confirmed-tunnel-sites
+mkdir -p $confirmed_dir
 
-is_ready_tunnelsite() {
-    readyfile=$ready_dir/$1
-    test -f $readyfile && return 0 || return 1
+is_confirmed_tunnelsite() {
+    file=$confirmed_dir/$1
+    test -f $file && return 0 || return 1
 }
 
 info() {

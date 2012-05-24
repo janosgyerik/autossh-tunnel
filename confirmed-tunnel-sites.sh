@@ -8,7 +8,7 @@ cd $(dirname "$0")
 . ./common.sh
 
 for tunnelsite in $(./detect-tunnel-sites.sh); do
-    test -f $ready_dir/$tunnelsite || continue
+    test -f $confirmed_dir/$tunnelsite || continue
     echo $tunnelsite
 done
 

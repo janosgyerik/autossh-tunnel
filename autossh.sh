@@ -10,8 +10,8 @@ cd $(dirname "$0")
 test "$1" && tunnelsites="$@" || tunnelsites=$(./confirmed-tunnel-sites.sh)
 
 for tunnelsite in $tunnelsites; do
-    if ! is_ready_tunnelsite $tunnelsite; then
-        warn tunnelsite: $tunnelsite is not ready. skipping.
+    if ! is_confirmed_tunnelsite $tunnelsite; then
+        warn tunnelsite: $tunnelsite is not confirmed skipping.
         continue
     fi
     if ! screen -ls | grep -F .$tunnelsite >/dev/null; then

@@ -46,8 +46,8 @@ for tunnelsite in $tunnelsites; do
         test $? = 0 -o $? = 1 && confirmed_access=1
     fi
     if test $confirmed_access = 1; then
-        info marking tunnel site ready
-        > $ready_dir/$tunnelsite
+        info marking tunnel site confirmed
+        > $confirmed_dir/$tunnelsite
     fi
 done
 
