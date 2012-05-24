@@ -1,0 +1,3 @@
+$cron_unique_label
+0	*	*	*	*	$PWD/autossh.sh
+
