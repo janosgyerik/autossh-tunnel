@@ -1,0 +1,2 @@
+/bin/sh -e everything
+make it work on mac
