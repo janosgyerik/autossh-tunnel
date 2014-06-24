@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 # 
 # File: confirmed-tunnel-sites.sh
 # Purpose: print detected tunnel sites that have been confirmed to work

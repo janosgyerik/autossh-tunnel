@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # 
 # File: stop.sh
 # Purpose: stop autossh for tunnel sites

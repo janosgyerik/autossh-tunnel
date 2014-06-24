@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 # 
 # File: setup.sh
 # Purpose: configure autossh-tunnel project
@@ -8,7 +8,7 @@ cd $(dirname "$0")
 . ./common.sh
 
 require autossh
-require screen
+require tmux
 
 heading() {
     echo '###' $*

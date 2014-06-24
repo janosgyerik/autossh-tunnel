@@ -1,12 +1,12 @@
 autossh-tunnel
 ==============
-Setup and keep alive ssh tunnels to remote sites using autossh, screen.
+Setup and keep alive ssh tunnels to remote sites using autossh, tmux.
 
 
 Requirements
 ------------
 - autossh
-- screen
+- tmux
 
 
 How it works
@@ -42,7 +42,7 @@ How it works
    Print tips how to test the configuration.
 
 5. `autossh.sh`: run `autossh` for each detected site in an independent
-   `screen` session, unless already running
+   `tmux` session, unless already running
 
 6. Add to `crontab` a line like this to periodically run `autossh.sh`:
 
@@ -59,7 +59,7 @@ gives you the steps you need to follow to complete the configuration.
 How to uninstall
 ----------------
 - Remove any `cron` jobs running `autossh.sh`
-- `./stop.sh` to stop any running `autossh` and `screen` instances
+- `./stop.sh` to stop any running `autossh` and `tmux` instances
 - Login to each tunnel site and manually remove the script's SSH key
   from `~/.ssh/authorized_keys`
 

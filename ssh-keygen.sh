@@ -1,8 +1,8 @@
-#!/bin/sh -e
+#!/bin/bash -e
 # 
 # File: ssh-keygen.sh
 # Purpose: create an SSH key without passphrase to use with autossh
-#   in screen, with restrictive options in the public key
+#   in tmux, with restrictive options in the public key
 #
 
 cd $(dirname "$0")
