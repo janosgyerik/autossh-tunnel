@@ -1,2 +1,2 @@
-/bin/sh -e everything
 make it work on mac
+make it use tmux instead of screen
