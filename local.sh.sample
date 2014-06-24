@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 # File: local.sh
 # Purpose: override variables and functions defined in ./defaults.sh

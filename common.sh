@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 # File: common.sh
 # Purpose: common functions

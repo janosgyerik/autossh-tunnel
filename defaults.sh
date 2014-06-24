@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 #
 # File: defaults.sh
 # Purpose: default variable settings
