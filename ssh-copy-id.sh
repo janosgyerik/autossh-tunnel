@@ -9,6 +9,14 @@ cd $(dirname "$0")
 
 test "$1" && tunnelsites="$@" || tunnelsites=$(./detect-tunnel-sites.sh)
 
+check_access_and_set_exitcode() {
+    info testing access to tunnel site $tunnelsite with ssh key
+    set +e
+    SSH_AGENT_PID= SSH_AUTH_SOCK= ssh -i $ssh_key_file -o BatchMode=yes $tunnelsite date
+    exitcode=$?
+    set -e
+}
+
 ssh_copy_id() {
     info trying to add ssh key to remote authorized_keys file
     info 'you may be prompted for your remote password'
@@ -16,17 +24,14 @@ ssh_copy_id() {
 }
 
 for tunnelsite in $tunnelsites; do
-    recheck=0
-    confirmed_access=0
-    info testing access to tunnel site $tunnelsite with ssh key
-    SSH_AGENT_PID= SSH_AUTH_SOCK= ssh -i $ssh_key_file -o BatchMode=yes $tunnelsite date
-    exitcode=$?
+    recheck=
+    confirmed_access=
+    check_access_and_set_exitcode
     if test $exitcode = 0; then
         warn 'It seems there is an active ControlMaster.'
         warn 'In this case it is impossible to validate the custom ssh key'
         warn 'perfectly, but trying best effort.'
-        ssh $tunnelsite grep "^command.*$ssh_key_comment" .ssh/authorized_keys >/dev/null
-        if test $? = 0; then
+        if ssh $tunnelsite grep "^command.*$ssh_key_comment" .ssh/authorized_keys >/dev/null; then
             info 'Custom ssh key is in authorized_keys, so probably it works.'
             confirmed_access=1
         else
@@ -40,15 +45,13 @@ for tunnelsite in $tunnelsites; do
     else
         ssh_copy_id && recheck=1 || continue
     fi
-    if test $recheck = 1; then
+    if test "$recheck"; then
         info 'checking access again'
-        SSH_AGENT_PID= SSH_AUTH_SOCK= ssh -i $ssh_key_file -o BatchMode=yes $tunnelsite date
-        test $? = 0 -o $? = 1 && confirmed_access=1
+        check_access_and_set_exitcode
+        test $exitcode = 0 -o $exitcode = 1 && confirmed_access=1
     fi
-    if test $confirmed_access = 1; then
+    if test "$confirmed_access"; then
         info marking tunnel site confirmed
         > $confirmed_dir/$tunnelsite
     fi
 done
-
-# eof
