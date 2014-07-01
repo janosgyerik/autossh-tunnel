@@ -59,7 +59,7 @@ It reuses an existing session or else it creates a new one.
 `crontab.sh`:
 helper script to add a line like this in `crontab` to periodically run `autossh.sh`:
 
-    0 * * * * AUTOSSH_PORT=0 $PWD/autossh.sh
+    0 * * * * $PWD/autossh.sh
 
 
 How to install

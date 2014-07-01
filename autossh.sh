@@ -9,6 +9,9 @@ cd $(dirname "$0")
 
 test "$1" && tunnelsites="$@" || tunnelsites=$(./confirmed-tunnel-sites.sh)
 
+# for Mac OS X, otherwise it just doesn't work...
+export AUTOSSH_PORT=0
+
 for tunnelsite in $tunnelsites; do
     if ! is_confirmed_tunnelsite $tunnelsite; then
         warn tunnelsite: $tunnelsite is not confirmed skipping.
