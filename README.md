@@ -5,8 +5,11 @@ Setup and keep alive ssh tunnels to remote sites using autossh, screen.
 
 Requirements
 ------------
+- bash
 - autossh
 - screen
+- awk (optional)
+- sed (optional)
 
 
 How it works
