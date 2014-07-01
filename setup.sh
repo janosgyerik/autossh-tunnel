@@ -41,9 +41,9 @@ EOF
 fi
 echo
 
-heading confirmed tunnel sites
 confirmed_tunnel_sites=$(./confirmed-tunnel-sites.sh)
 if test "$confirmed_tunnel_sites"; then
+    heading confirmed tunnel sites
     for tunnelsite in $confirmed_tunnel_sites; do
         echo $tunnelsite
     done
@@ -51,6 +51,15 @@ if test "$confirmed_tunnel_sites"; then
         warn 'Access to some detected tunnel sites has not been confirmed yet.'
         warn 'Run ./ssh-copy-id.sh to fix that.'
     fi
+    echo
+
+    heading 'Example to test that a tunnel site is working'
+    for tunnelsite in $confirmed_tunnel_sites; do
+        echo "# site: $tunnelsite"
+        echo "AUTOSSH_PORT=0 ./autossh.sh $tunnelsite"
+        sed -ne '/^Host '$tunnelsite'$/,/^$/p' ~/.ssh/config | awk '/^User / { user = $2 } /^Hostname / { host = $2 } /^RemoteForward / { port = $2 } END { print "ssh " user "@" host; print "ssh -p " port " localhost date" }'
+        echo
+    done
 else
     warn 'No tunnel site has been confirmed as working.'
     warn 'Review your tunnel site configurations in ~/.ssh/config'
@@ -60,15 +69,3 @@ else
     warn '2. Confirm the tunnel site is accessible via the key'
     warn '3. Mark the tunnel site as "confirmed"'
 fi
-echo
-
-heading 'Example to test that a tunnel site is working'
-cat<<EOF
-
-    AUTOSSH_PORT=0 ./autossh.sh autossh-HOSTNAME
-    ssh USERNAME@HOSTNAME
-    ssh -p 8022 localhost
-
-EOF
-
-# eof
