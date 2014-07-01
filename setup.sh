@@ -17,7 +17,8 @@ heading() {
 heading variables
 echo ssh_key_file=$ssh_key_file
 if ! test -f $ssh_key_file; then
-    warn The ssh key file does not exist. Run ./ssh-keygen.sh
+    warn The dedicated ssh key file "($ssh_key_file)" does not exist
+    warn Create it manually or run ./ssh-keygen.sh helper script
 fi
 echo
 
