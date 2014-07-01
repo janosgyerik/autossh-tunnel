@@ -60,6 +60,8 @@ if test "$confirmed_tunnel_sites"; then
         sed -ne '/^Host '$tunnelsite'$/,/^$/p' ~/.ssh/config | awk '/^User / { user = $2 } /^Hostname / { host = $2 } /^RemoteForward / { port = $2 } END { print "ssh " user "@" host; print "ssh -p " port " localhost date" }'
         echo
     done
+
+    echo '# To stop all running autossh and screen sessions, run: ./stop.sh'
 else
     warn 'No tunnel site has been confirmed as working.'
     warn 'Review your tunnel site configurations in ~/.ssh/config'
