@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 # 
 # File: autossh.sh
 # Purpose: run autossh for each tunnel site, if not already running

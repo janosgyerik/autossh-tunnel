@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 # 
 # File: ssh-copy-id.sh
 # Purpose: install SSH key in `~/.ssh/authorized_keys` detected tunnel sites
