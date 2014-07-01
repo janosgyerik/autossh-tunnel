@@ -11,5 +11,6 @@ test "$1" && tunnelsites="$@" || tunnelsites=$(./confirmed-tunnel-sites.sh)
 
 for tunnelsite in $tunnelsites; do
     info stopping $tunnelsite ...
+    screen -S $tunnelsite -wipe >/dev/null || :
     screen -S $tunnelsite -p 0 -X stuff 
 done
