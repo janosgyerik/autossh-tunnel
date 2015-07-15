@@ -1,5 +1,5 @@
 #!/bin/sh -e
-# 
+#
 # File: ssh-copy-id.sh
 # Purpose: install SSH key in `~/.ssh/authorized_keys` detected tunnel sites
 #
@@ -20,7 +20,7 @@ check_access_and_set_exitcode() {
 ssh_copy_id() {
     info trying to add ssh key to remote authorized_keys file
     info 'you may be prompted for your remote password'
-    ssh $tunnelsite 'mkdir -p .ssh; cat >> .ssh/authorized_keys; chmod -R go-rwx .ssh' < $ssh_key_file.pub
+    ssh $tunnelsite "mkdir -p .ssh; sed -e \"s|__PATH_TO_FALSE__|\`which false\`|\" >> .ssh/authorized_keys; chmod -R go-rwx .ssh" < $ssh_key_file.pub
 }
 
 for tunnelsite in $tunnelsites; do
@@ -40,7 +40,7 @@ for tunnelsite in $tunnelsites; do
         fi
     elif test $exitcode = 1; then
         info 'Exit code was 1, most probably because the key is authorized'
-        info 'with the forced command /bin/false as expected.'
+        info 'with the forced command /bin/false or /usr/bin/false as expected.'
         confirmed_access=1
     else
         ssh_copy_id && recheck=1 || continue
